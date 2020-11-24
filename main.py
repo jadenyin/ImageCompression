@@ -33,15 +33,15 @@ def PCA_com(data,alpha):
     rec_data=np.uint8(np.absolute(rec_data))
     return rec_data,new_data
 
-a=imageio.imread("beach/beach00.tif")
+a=imageio.imread("airplane/airplane31.tif")
 a_np=np.array(a)
 a_r=a_np[:,:,0]#R
 a_g=a_np[:,:,1]#G
 a_b=a_np[:,:,2]#B
 
-a_r_recon,a_r_com=PCA_com(a_r,0.95)
-a_g_recon,a_g_com=PCA_com(a_g,0.95)
-a_b_recon,a_b_com=PCA_com(a_b,0.95)
+a_r_recon,a_r_com=PCA_com(a_r,0.90)
+a_g_recon,a_g_com=PCA_com(a_g,0.90)
+a_b_recon,a_b_com=PCA_com(a_b,0.90)
 recon_color_img=np.dstack((a_r_recon,a_g_recon,a_b_recon))
 com_pic_size=2*(a_r_com.size+a_g_com.size+a_b_com.size)
 #计算空间节省和压缩率
@@ -52,6 +52,7 @@ recon_err=np.sum((recon_color_img-a)**2)/a.size
 #重构图像并显示
 img=Image.fromarray(recon_color_img)
 img.show()
+img.save('01.jpg')
 print("节省空间: %f kb" % saved_space)
 print("压缩率: %f%%" %com_rate)
 print("重构误差: %f" %recon_err)
